@@ -39,9 +39,20 @@ var id int = 0
 
 // basic api interface
 type ApiMethods interface {
-	Request() (Response, error)
-	Search() (SearchResponse, error)
-	GetObjectByID() (Response, error)
+	// i-doit api request structure
+	// as defined in https://kb.i-doit.com/pages/viewpage.action?pageId=7831613
+	// also there is a list of methods available
+	Request(string, interface{}) (Response, error)
+
+	// search CMDB using a string
+	//
+	// The search function does handle type assertions
+	// for simple output usage
+	Search(string) (SearchResponse, error)
+
+	// get object(s) data,
+	// single id or slice of id's can be used
+	GetObjectsByID([]int) (Response, error)
 	/*
 		Login()
 		Logout()
@@ -54,9 +65,6 @@ type Api struct {
 	url, apikey string
 }
 
-// i-doit api request structure
-// as defined in https://kb.i-doit.com/pages/viewpage.action?pageId=7831613
-// also there is a list of methods available
 type Request struct {
 	Version string      `json:"version"`
 	Method  string      `json:"method"`
@@ -101,10 +109,6 @@ func Newapi(url string, apikey string) (*Api, error) {
 	return nil, errors.New("url or apikey empty")
 }
 
-// Request i-doit Api using method an parameter
-// parameter should be implemented as a struct
-// be sure to use uppercase first letter for your struct
-// entrys to make it public
 func (a Api) Request(method string, parameters interface{}) (Response, error) {
 
 	var params = GetParams(a, parameters)
@@ -138,10 +142,6 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 	return ret, nil
 }
 
-// search CMDB using a string
-//
-// The search function does handle type assertions
-// for simple output usage
 func (a *Api) Search(query string) (SearchResponse, error) {
 	params := struct {
 		Query string `json:"q"`
