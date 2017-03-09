@@ -54,7 +54,9 @@ type api struct {
 	url, apikey string
 }
 
-// required request informations
+// i-doit api request structure
+// as defined in https://kb.i-doit.com/pages/viewpage.action?pageId=7831613
+// also there is a list of methods available
 type request struct {
 	Version string      `json:"version"`
 	Method  string      `json:"method"`
@@ -62,18 +64,23 @@ type request struct {
 	Id      int         `json:"id"`
 }
 
+// i-doit api response structure
 type Response struct {
 	Jsonrpc string      `json:"jsonrpc"`
 	Result  interface{} `json:"result"`
 	Error   IdoitError  `json:"error"`
 }
 
+// i-doit api response structure used for search requests
+//
+// the map is used to handle type assertions
 type SearchResponse struct {
 	Jsonrpc string
 	Result  []map[string]interface{}
 	Error   IdoitError
 }
 
+// i-doit api error structure
 type IdoitError struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
@@ -85,11 +92,7 @@ type Apikey struct {
 	Apikey string `json:"apikey"`
 }
 
-/* api constructor
-@param: url string
-@param: apikey string
-@return: *api, error
-*/
+// api constructor
 func Newapi(url string, apikey string) (*api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
 		a := api{url, apikey}
@@ -98,14 +101,10 @@ func Newapi(url string, apikey string) (*api, error) {
 	return nil, errors.New("url or apikey empty")
 }
 
-/* Request i-doit Api using method an parameter
-parameter should be implemented as a struct using
-be sure to use uppercase first letter for your struct
-entrys to make it public
-@param: method string
-@param: parameter interface{}
-@return: error
-*/
+// Request i-doit Api using method an parameter
+// parameter should be implemented as a struct
+// be sure to use uppercase first letter for your struct
+// entrys to make it public
 func (a api) Request(method string, parameters interface{}) (Response, error) {
 
 	var params = GetParams(a, parameters)
@@ -118,7 +117,6 @@ func (a api) Request(method string, parameters interface{}) (Response, error) {
 		Id:      id,
 	}
 
-	// loging tbd
 	dataJson, err := json.Marshal(data)
 
 	// logging tbd
@@ -140,7 +138,10 @@ func (a api) Request(method string, parameters interface{}) (Response, error) {
 	return ret, nil
 }
 
-// search CMDB
+// search CMDB using a string
+//
+// The search function does handle type assertions
+// for simple output usage
 func (a *api) Search(query string) (SearchResponse, error) {
 	params := struct {
 		Query string `json:"q"`
@@ -171,12 +172,7 @@ func getID() int {
 	return id
 }
 
-/* build parameter struct
-append nessesary parameters to user provided one
-@param: a api
-@param: parameter interface {}
-@return: interface{}
-*/
+// append nessesary parameters to user provided one
 func GetParams(a api, parameters interface{}) interface{} {
 
 	var params map[string]string
