@@ -38,7 +38,7 @@ import (
 var id int = 0
 
 // basic api interface
-type apiMethods interface {
+type ApiMethods interface {
 	Request() (Response, error)
 	Search() (SearchResponse, error)
 	GetObjectByID() (Response, error)
@@ -50,14 +50,14 @@ type apiMethods interface {
 }
 
 // api struct used for implementing the apiMethods interface
-type api struct {
+type Api struct {
 	url, apikey string
 }
 
 // i-doit api request structure
 // as defined in https://kb.i-doit.com/pages/viewpage.action?pageId=7831613
 // also there is a list of methods available
-type request struct {
+type Request struct {
 	Version string      `json:"version"`
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params"`
@@ -93,9 +93,9 @@ type Apikey struct {
 }
 
 // api constructor
-func Newapi(url string, apikey string) (*api, error) {
+func Newapi(url string, apikey string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
-		a := api{url, apikey}
+		a := Api{url, apikey}
 		return &a, nil
 	}
 	return nil, errors.New("url or apikey empty")
@@ -105,12 +105,12 @@ func Newapi(url string, apikey string) (*api, error) {
 // parameter should be implemented as a struct
 // be sure to use uppercase first letter for your struct
 // entrys to make it public
-func (a api) Request(method string, parameters interface{}) (Response, error) {
+func (a Api) Request(method string, parameters interface{}) (Response, error) {
 
 	var params = GetParams(a, parameters)
 	id = getID()
 
-	data := request{
+	data := Request{
 		Version: "2.0",
 		Method:  method,
 		Params:  params,
@@ -142,7 +142,7 @@ func (a api) Request(method string, parameters interface{}) (Response, error) {
 //
 // The search function does handle type assertions
 // for simple output usage
-func (a *api) Search(query string) (SearchResponse, error) {
+func (a *Api) Search(query string) (SearchResponse, error) {
 	params := struct {
 		Query string `json:"q"`
 	}{query}
@@ -173,7 +173,7 @@ func getID() int {
 }
 
 // append nessesary parameters to user provided one
-func GetParams(a api, parameters interface{}) interface{} {
+func GetParams(a Api, parameters interface{}) interface{} {
 
 	var params map[string]string
 	apikey := Apikey{a.apikey}
@@ -196,6 +196,7 @@ func GetParams(a api, parameters interface{}) interface{} {
 	return params
 }
 
+// parse json response
 func ParseResponse(resp *http.Response) Response {
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
