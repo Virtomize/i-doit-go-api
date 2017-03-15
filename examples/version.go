@@ -8,7 +8,7 @@ import (
 func main() {
 
 	// create api object using api url and your api key
-	a, _ := goidoit.Newapi("http://example.com/src/jsonrpc.php", "myapikey")
+	a, _ := goidoit.Newapi("https://example.com/src/jsonrpc.php", "myapikey")
 
 	// do a simple request  like getting the idoit version
 	json, _ := a.Request("idoit.version", nil)

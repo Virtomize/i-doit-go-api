@@ -36,6 +36,7 @@ import (
 
 // request id
 var id int = 0
+var debug bool = false
 
 // basic api interface
 type ApiMethods interface {
@@ -48,11 +49,11 @@ type ApiMethods interface {
 	//
 	// The search function does handle type assertions
 	// for simple output usage
-	Search(string) (SearchResponse, error)
+	Search(string) (GenericResponse, error)
 
 	// get object(s) data,
-	// single id or slice of id's can be used
-	GetObjectsByID([]int) (Response, error)
+	// for input an id can be used an array of ids can be used or the title string can be used
+	GetObject(interface{}) (Response, error)
 	/*
 		Login()
 		Logout()
@@ -62,7 +63,7 @@ type ApiMethods interface {
 
 // api struct used for implementing the apiMethods interface
 type Api struct {
-	url, apikey string
+	Url, Apikey string
 }
 
 type Request struct {
@@ -82,7 +83,7 @@ type Response struct {
 // i-doit api response structure used for search requests
 //
 // the map is used to handle type assertions
-type SearchResponse struct {
+type GenericResponse struct {
 	Jsonrpc string
 	Result  []map[string]interface{}
 	Error   IdoitError
@@ -124,9 +125,9 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 	dataJson, err := json.Marshal(data)
 
 	// logging tbd
-	//fmt.Println("Request: ", string(dataJson))
+	debugPrint("----> # Request # <----\n%s\n", string(dataJson))
 
-	req, err := http.NewRequest("POST", a.url, bytes.NewBuffer(dataJson))
+	req, err := http.NewRequest("POST", a.Url, bytes.NewBuffer(dataJson))
 	if err != nil {
 		fmt.Println("REQUEST ERROR: ", err)
 		return Response{}, err
@@ -142,17 +143,66 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 	return ret, nil
 }
 
-func (a *Api) Search(query string) (SearchResponse, error) {
+func (a *Api) Search(query string) (GenericResponse, error) {
 	params := struct {
 		Query string `json:"q"`
 	}{query}
 	data, err := a.Request("idoit.search", &params)
 	if err != nil {
-		return SearchResponse{}, err
+		return GenericResponse{}, err
 	}
 
 	// do type assertions for easy output handling
-	ret := SearchResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
+	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
+
+	ret.Error.Data = ""
+	if data.Error.Data != nil {
+		ret.Error.Data = data.Error.Data.(string)
+	}
+
+	results := data.Result.([]interface{})
+	for i := range results {
+		ret.Result = append(ret.Result, results[i].(map[string]interface{}))
+	}
+	return ret, nil
+}
+
+// Object filter type int or []int
+type F1 struct {
+	Data []int `json:"ids"`
+}
+
+// Object filter type string
+type F2 struct {
+	Data string `json:"title"`
+}
+
+func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
+
+	var Params interface{}
+	switch query.(type) {
+	case int:
+		Params = struct {
+			Filter F1 `json:"filter"`
+		}{F1{[]int{query.(int)}}}
+	case []int:
+		Params = struct {
+			Filter F1 `json:"filter"`
+		}{F1{query.([]int)}}
+	case string:
+		Params = struct {
+			Filter F2 `json:"filter"`
+		}{F2{query.(string)}}
+	default:
+		return GenericResponse{}, errors.New("Input type is not int, []int or string")
+	}
+
+	data, err := a.Request("cmdb.objects.read", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	//fmt.Println(data)
+	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
 
 	ret.Error.Data = ""
 	if data.Error.Data != nil {
@@ -175,8 +225,8 @@ func getID() int {
 // append nessesary parameters to user provided one
 func GetParams(a Api, parameters interface{}) interface{} {
 
-	var params map[string]string
-	apikey := Apikey{a.apikey}
+	var params map[string]interface{}
+	apikey := Apikey{a.Apikey}
 
 	jsonParameters, err := json.Marshal(parameters)
 
@@ -204,10 +254,19 @@ func ParseResponse(resp *http.Response) Response {
 	}
 
 	// logging tbd
-	//fmt.Println("Response: ", string(data))
+	debugPrint("----> # Response # <----\n%s\n", string(data))
 
 	var ret Response
 	_ = json.Unmarshal(data, &ret)
 
 	return ret
+}
+
+// used for Request/Response debugging
+func debugPrint(format string, a ...interface{}) (n int, err error) {
+	if debug {
+		return fmt.Printf(format, a)
+	} else {
+		return 0, nil
+	}
 }
