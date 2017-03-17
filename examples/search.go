@@ -7,7 +7,10 @@ import (
 
 func main() {
 	// create api object
-	a, _ := goidoit.Newapi("https://example.com/src/jsonrpc.php", "yourapikey")
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+
+	// enable debug
+	// goidoit.Debug(true)
 
 	// search for sht like test
 	s, _ := a.Search("test")

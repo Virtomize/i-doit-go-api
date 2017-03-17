@@ -101,8 +101,12 @@ type Apikey struct {
 	Apikey string `json:"apikey"`
 }
 
+func Debug(v bool) {
+	debug = v
+}
+
 // api constructor
-func Newapi(url string, apikey string) (*Api, error) {
+func NewApi(url string, apikey string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
 		a := Api{url, apikey}
 		return &a, nil

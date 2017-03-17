@@ -7,7 +7,10 @@ import (
 
 func main() {
 	// create api object
-	a, _ := goidoit.Newapi("http://example.com/src/jsonrpc.php", "yourapikey")
+	a, _ := goidoit.NewApi("http://example.com/src/jsonrpc.php", "yourapikey")
+
+	// enable debug
+	// goidoit.Debug(true)
 
 	// select via string
 	viaString, _ := a.GetObject("Root location")
