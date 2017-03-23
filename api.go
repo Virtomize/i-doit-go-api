@@ -200,6 +200,7 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// Quickpurge ftw
 func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
 
 	var Params interface{}
@@ -223,6 +224,7 @@ func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// generic Type Assert function
 func TypeAssertResult(data Response) (GenericResponse, error) {
 	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
 
