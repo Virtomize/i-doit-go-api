@@ -207,17 +207,17 @@ func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
 	switch ids.(type) {
 	case int:
 		Params = struct {
-			Filter F1 `json:"filter"`
-		}{F1{[]int{ids.(int)}}}
+			Id int `json:"id"`
+		}{ids.(int)}
 	case []int:
 		Params = struct {
-			Filter F1 `json:"filter"`
-		}{F1{ids.([]int)}}
+			Ids []int `json:"ids"`
+		}{ids.([]int)}
 	default:
 		return GenericResponse{}, errors.New("Input type is not int or []int")
 	}
 
-	data, err := a.Request("cmdb.objects.quickpurge", &Params)
+	data, err := a.Request("cmdb.object.quickpurge", &Params)
 	if err != nil {
 		return GenericResponse{}, err
 	}
@@ -230,12 +230,14 @@ func TypeAssertResult(data Response) (GenericResponse, error) {
 
 	ret.Error.Data = ""
 	if data.Error.Data != nil {
-		ret.Error.Data = data.Error.Data.(string)
+		ret.Error.Data = data.Error.Data.(map[string]interface{})
 	}
 
-	results := data.Result.([]interface{})
-	for i := range results {
-		ret.Result = append(ret.Result, results[i].(map[string]interface{}))
+	if data.Result != nil {
+		results := data.Result.([]interface{})
+		for i := range results {
+			ret.Result = append(ret.Result, results[i].(map[string]interface{}))
+		}
 	}
 
 	return ret, nil
