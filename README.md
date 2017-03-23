@@ -1,4 +1,4 @@
-**__ This project is still under development and not fully featured __**
+**__ This project is still under development and not fully featured yet __**
 
 # i-doit-go-api/goidoit 
 
@@ -29,11 +29,11 @@ import (
 )
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+  // create api object
+  a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
-	// search for sht like test
-	s, _ := a.Search("test")
+  // search for sth like test
+  s, _ := a.Search("test")
 
   // thats it
   fmt.Println(s)
@@ -42,7 +42,7 @@ func main() {
 
 ### Advanced examples
 
-There are more advanced [examples documented](https://github.com/cseeger-epages/i-doit-go-api/tree/master/examples) in the repo for common use cases.
+There are more advanced [examples](https://github.com/cseeger-epages/i-doit-go-api/tree/master/examples) documented in the repo for common use cases.
 
 ## Code Documentation
 
