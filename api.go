@@ -52,7 +52,7 @@ type ApiMethods interface {
 	Search(string) (GenericResponse, error)
 
 	// get object(s) data,
-	// for input an id can be used an array of ids can be used or the title string can be used
+	// input can be of type int, []int, string or a custom filter struct
 	GetObject(interface{}) (GenericResponse, error)
 
 	// fast delete option where archive, delete and purge will be executed one after another
@@ -173,6 +173,7 @@ type F2 struct {
 	Data string `json:"title"`
 }
 
+// Get Object by everything
 func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 
 	var Params interface{}
@@ -190,7 +191,7 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 			Filter F2 `json:"filter"`
 		}{F2{query.(string)}}
 	default:
-		return GenericResponse{}, errors.New("Input type is not int, []int or string")
+		Params = query
 	}
 
 	data, err := a.Request("cmdb.objects.read", &Params)

@@ -25,4 +25,22 @@ func main() {
 	for i := range viaIntSlice.Result {
 		fmt.Printf("%#v\n", viaIntSlice.Result[i]["title"])
 	}
+
+	// or you provide your own filter struct as defined in i-doit api reference page 27f.
+	//
+	// create a struct with some specified filterparameter
+	type S struct {
+		FN string `json:"first_name"`
+	}
+	// initialise another struct providing your filterparameter as filter
+	CustomStruct := struct {
+		Filter S `json:"filter"`
+	}{S{"Max"}} // <-- struct initialisation using our parameter struct
+
+	// get your filtered objects
+	viaStruct, _ := a.GetObject(CustomStruct)
+
+	for i := range viaStruct.Result {
+		fmt.Printf("%#v\n", viaStruct.Result[i]["title"])
+	}
 }
