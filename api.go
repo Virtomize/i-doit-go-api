@@ -53,7 +53,11 @@ type ApiMethods interface {
 
 	// get object(s) data,
 	// for input an id can be used an array of ids can be used or the title string can be used
-	GetObject(interface{}) (Response, error)
+	GetObject(interface{}) (GenericResponse, error)
+
+	// fast delete option where archive, delete and purge will be executed one after another
+	// accepts id or []id as input
+	Quickpurge(interface{}) (GenericResponse, error)
 	/*
 		Login()
 		Logout()
@@ -156,19 +160,7 @@ func (a *Api) Search(query string) (GenericResponse, error) {
 		return GenericResponse{}, err
 	}
 
-	// do type assertions for easy output handling
-	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
-
-	ret.Error.Data = ""
-	if data.Error.Data != nil {
-		ret.Error.Data = data.Error.Data.(string)
-	}
-
-	results := data.Result.([]interface{})
-	for i := range results {
-		ret.Result = append(ret.Result, results[i].(map[string]interface{}))
-	}
-	return ret, nil
+	return TypeAssertResult(data)
 }
 
 // Object filter type int or []int
@@ -205,7 +197,33 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 	if err != nil {
 		return GenericResponse{}, err
 	}
-	//fmt.Println(data)
+	return TypeAssertResult(data)
+}
+
+func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
+
+	var Params interface{}
+	switch ids.(type) {
+	case int:
+		Params = struct {
+			Filter F1 `json:"filter"`
+		}{F1{[]int{ids.(int)}}}
+	case []int:
+		Params = struct {
+			Filter F1 `json:"filter"`
+		}{F1{ids.([]int)}}
+	default:
+		return GenericResponse{}, errors.New("Input type is not int or []int")
+	}
+
+	data, err := a.Request("cmdb.objects.quickpurge", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+func TypeAssertResult(data Response) (GenericResponse, error) {
 	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
 
 	ret.Error.Data = ""
@@ -217,6 +235,7 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 	for i := range results {
 		ret.Result = append(ret.Result, results[i].(map[string]interface{}))
 	}
+
 	return ret, nil
 }
 
