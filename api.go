@@ -58,10 +58,31 @@ type ApiMethods interface {
 	// fast delete option where archive, delete and purge will be executed one after another
 	// accepts id or []id as input
 	Quickpurge(interface{}) (GenericResponse, error)
-	/*
-		Login()
-		Logout()
-		IsLoggedIn()
+
+	// create objects using struct
+	Create(interface{}) (GenericResponse, error)
+
+	// update object
+	Update(interface{}) (GenericResponse, error)
+
+	/* Delete/Archive/Purge object, input can be int (using the object id) or
+	data := struct {
+		Id int `json:"id"`
+		Status string `json:"status"`
+	}
+
+	where Id represents the object id
+	and Status can be
+	C__RECORD_STATUS__ARCHIVED
+	C__RECORD_STATUS__DELETED
+	C__RECORD_STATUS__PURGE
+	*/
+	Delete(interface{}) (GenericResponse, error)
+
+	/* tbd
+	Login()
+	Logout()
+	IsLoggedIn()
 	*/
 }
 
@@ -225,6 +246,46 @@ func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// Create Object
+func (a *Api) Create(Params interface{}) (GenericResponse, error) {
+
+	data, err := a.Request("cmdb.object.create", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+// Update Object
+func (a *Api) Update(Params interface{}) (GenericResponse, error) {
+
+	data, err := a.Request("cmdb.object.update", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+// Delete/Archive/Purge Object
+func (a *Api) Delete(deleteMe interface{}) (GenericResponse, error) {
+
+	var Params interface{}
+	switch deleteMe.(type) {
+	case int:
+		Params = struct {
+			Id int `json:"id"`
+		}{deleteMe.(int)}
+	default:
+		Params = deleteMe
+	}
+
+	data, err := a.Request("cmdb.object.delete", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
 // generic Type Assert function
 func TypeAssertResult(data Response) (GenericResponse, error) {
 	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
@@ -235,9 +296,14 @@ func TypeAssertResult(data Response) (GenericResponse, error) {
 	}
 
 	if data.Result != nil {
-		results := data.Result.([]interface{})
-		for i := range results {
-			ret.Result = append(ret.Result, results[i].(map[string]interface{}))
+		switch data.Result.(type) {
+		case []interface{}:
+			results := data.Result.([]interface{})
+			for i := range results {
+				ret.Result = append(ret.Result, results[i].(map[string]interface{}))
+			}
+		case interface{}:
+			ret.Result = append(ret.Result, data.Result.(map[string]interface{}))
 		}
 	}
 
