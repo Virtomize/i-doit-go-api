@@ -1,10 +1,30 @@
-**__ This project is still under development and not fully featured yet __**
+**__ This project is still under development __**
 
 # i-doit-go-api/goidoit 
 
 is an I-doit API client implementation written in [GOLANG](https://golang.org).
 
 Its focused on simplicity to create easy writable code for your projects.
+
+the package supports:
+- Searching
+- Getting object information by id, id slice, string or custom field
+- creating, altering, deleting, archiving, quickpurging objects
+
+Other types of requests like
+- object\_types (comming soon)
+- object\_type\_categories (comming soon)
+- object\_type\_groups (comming soon)
+- objects\_by\_relation (comming soon)
+- categories (category, category\_info)
+- reports (maybe)
+- location\_tree
+- workstation\_components
+- logbook
+- impact
+
+are not implemented yet (and maybe never will) but can easily be implemented using the goidoit.Request function
+there are some [advanced](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced.go) [examples](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced2.go) of how to do this.
 
 ## Installation
 

@@ -153,7 +153,7 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 
 	dataJson, err := json.Marshal(data)
 
-	// logging tbd
+	// logging
 	debugPrint("----> # Request # <----\n%s\n", string(dataJson))
 
 	req, err := http.NewRequest("POST", a.Url, bytes.NewBuffer(dataJson))
@@ -347,7 +347,7 @@ func ParseResponse(resp *http.Response) Response {
 		log.Fatal("PARSING ERROR: ", err)
 	}
 
-	// logging tbd
+	// logging
 	debugPrint("----> # Response # <----\n%s\n", string(data))
 
 	var ret Response

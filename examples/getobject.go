@@ -31,12 +31,12 @@ func main() {
 	// create a struct with some specified filterparameter
 	type S struct {
 		FN string `json:"first_name"`
-		L  int    `json:"limit"`
 	}
 	// initialise another struct providing your filterparameter as filter
 	CustomStruct := struct {
-		Filter S `json:"filter"`
-	}{S{"Max", 1}} // <-- struct initialisation using our parameter struct
+		Filter S   `json:"filter"`
+		L      int `json:"limit"`
+	}{S{"Max"}, 1} // <-- struct initialisation using our parameter struct
 
 	// get your filtered objects
 	viaStruct, _ := a.GetObject(CustomStruct)
