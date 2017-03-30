@@ -16,7 +16,7 @@ Other types of requests like
 - object\_type\_categories (comming soon)
 - object\_type\_groups (comming soon)
 - objects\_by\_relation (comming soon)
-- categories (category, category\_info)
+- categories (category, category\_info) (wip)
 - reports (maybe)
 - location\_tree
 - workstation\_components

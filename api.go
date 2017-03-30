@@ -33,6 +33,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // request id
@@ -56,6 +57,11 @@ type ApiMethods interface {
 	// get object(s) data,
 	// input can be of type int, []int, string or a custom filter struct
 	GetObject(interface{}) (GenericResponse, error)
+
+	// get categorys for object using object id and category id or category constant
+	// eg. GetCategory(20,50)
+	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
+	GetCategory(int, interface{}) (GenericResponse, error)
 
 	// fast delete option where archive, delete and purge will be executed one after another
 	// accepts id or []id as input
@@ -237,6 +243,32 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 		return GenericResponse{}, err
 	}
 	return TypeAssertResult(data)
+}
+
+func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error) {
+
+	var CustomStruct interface{}
+	switch query.(type) {
+	case int:
+		CustomStruct = struct {
+			ObjID  string `json:"objID"`
+			CatgID int    `json:"catgID"`
+		}{strconv.Itoa(objID), query.(int)}
+	case string:
+		CustomStruct = struct {
+			ObjID    string `json:"objID"`
+			Category string `json:"category"`
+		}{strconv.Itoa(objID), query.(string)}
+	}
+
+	data, err := a.Request("cmdb.category.read", CustomStruct)
+
+	ret, err := TypeAssertResult(data)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+
+	return ret, nil
 }
 
 // Quickpurge ftw
