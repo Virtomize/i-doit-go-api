@@ -26,6 +26,7 @@ package goidoit
 
 import (
 	"bytes"
+	"crypto/tls"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -37,6 +38,7 @@ import (
 // request id
 var id int = 0
 var debug bool = false
+var insecure bool = false
 
 // basic api interface
 type ApiMethods interface {
@@ -130,6 +132,11 @@ func Debug(v bool) {
 	debug = v
 }
 
+// disable SSL/TLS verification for self signed certificates
+func SkipTLSVerify(v bool) {
+	insecure = v
+}
+
 // api constructor
 func NewApi(url string, apikey string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
@@ -162,7 +169,17 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 		return Response{}, err
 	}
 	req.Header.Add("content-type", "application/json")
-	client := &http.Client{}
+	tr := &http.Transport{}
+	if insecure {
+		tr = &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		}
+	} else {
+		tr = &http.Transport{
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
+		}
+	}
+	client := &http.Client{Transport: tr}
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("REQUEST ERROR: ", err)
