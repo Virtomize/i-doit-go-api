@@ -63,6 +63,9 @@ type ApiMethods interface {
 	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
 	GetCategory(int, interface{}) (GenericResponse, error)
 
+	// get report data via id
+	GetReport(int) (GenericResponse, error)
+
 	// fast delete option where archive, delete and purge will be executed one after another
 	// accepts id or []id as input
 	Quickpurge(interface{}) (GenericResponse, error)
@@ -262,6 +265,22 @@ func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error)
 	}
 
 	data, err := a.Request("cmdb.category.read", CustomStruct)
+
+	ret, err := TypeAssertResult(data)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+
+	return ret, nil
+}
+
+func (a *Api) GetReport(RepID int) (GenericResponse, error) {
+
+	CustomStruct := struct {
+		ID int `json:"id"`
+	}{RepID}
+
+	data, err := a.Request("cmdb.reports.read", CustomStruct)
 
 	ret, err := TypeAssertResult(data)
 	if err != nil {

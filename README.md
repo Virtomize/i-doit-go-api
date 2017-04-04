@@ -10,6 +10,8 @@ the package supports:
 - Searching
 - Getting object information by id, id slice, string or custom field
 - creating, altering, deleting, archiving, quickpurging objects
+- reports
+- categories (only parts implemented) (wip)
 
 Other types of requests like
 - object\_types (comming soon)
@@ -17,7 +19,6 @@ Other types of requests like
 - object\_type\_groups (comming soon)
 - objects\_by\_relation (comming soon)
 - categories (category, category\_info) (wip)
-- reports (maybe)
 - location\_tree
 - workstation\_components
 - logbook
