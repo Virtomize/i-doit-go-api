@@ -7,15 +7,17 @@ is an I-doit API client implementation written in [GOLANG](https://golang.org).
 Its focused on simplicity to create easy writable code for your projects.
 
 the package supports:
+- Login
+- Requests
 - Searching
 - Getting object information by id, id slice, string or custom field
 - creating, altering, deleting, archiving, quickpurging objects
 - reports
 - categories (only parts implemented) (wip)
+- object\_type\_categories
 
 Other types of requests like
 - object\_types (comming soon)
-- object\_type\_categories (comming soon)
 - object\_type\_groups (comming soon)
 - objects\_by\_relation (comming soon)
 - categories (category, category\_info) (wip)
@@ -53,6 +55,9 @@ func main() {
   // create api object
   a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
+  // or login using X-RPC-Auth
+  // a, _ := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+
   // search for sth like test
   s, _ := a.Search("test")
 
@@ -76,7 +81,9 @@ You find the full [code documentation here](https://godoc.org/github.com/cseeger
 - [godoc](https://godoc.org/)
 - [golang playground](https://play.golang.org/)
 
-## Other client implementations
+## Other great client implementations
 
 - Benjamin Heisigs [i-doit-api-client-php](https://github.com/bheisig/i-doit-api-client-php/)
 - Dennis Stückens [i-doit-api-clients](https://bitbucket.org/dstuecken/i-doit-api-clients/)
+
+Thanks for your code inspirations!

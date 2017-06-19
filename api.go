@@ -43,6 +43,17 @@ var insecure bool = false
 
 // basic api interface
 type ApiMethods interface {
+	// idoit.login using X-RPC-AUTH
+	// goidoit.NewLogin wraps this function
+	// eg. idoit.NewLogin(<url>, <api-key>, <username>, <password>)
+	Login() error
+
+	// check login state
+	IsLoggedIn() bool
+
+	// Destroy X-RPC-Session
+	Logout() error
+
 	// i-doit api request structure
 	// as defined in https://kb.i-doit.com/pages/viewpage.action?pageId=7831613
 	// also there is a list of methods available
@@ -94,17 +105,11 @@ type ApiMethods interface {
 	C__RECORD_STATUS__PURGE
 	*/
 	Delete(interface{}) (GenericResponse, error)
-
-	/* tbd
-	Login()
-	Logout()
-	IsLoggedIn()
-	*/
 }
 
 // api struct used for implementing the apiMethods interface
 type Api struct {
-	Url, Apikey string
+	Url, Apikey, Username, Password, SessionId string
 }
 
 type Request struct {
@@ -154,10 +159,56 @@ func SkipTLSVerify(v bool) {
 // api constructor
 func NewApi(url string, apikey string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
-		a := Api{url, apikey}
+		a := Api{url, apikey, "", "", ""}
 		return &a, nil
 	}
 	return nil, errors.New("url or apikey empty")
+}
+
+// api constructor using login x-rpc auth
+func NewLogin(url string, apikey string, username string, password string) (*Api, error) {
+	if len(url) != 0 && len(apikey) != 0 && len(username) != 0 && len(password) != 0 {
+		a := Api{url, apikey, username, password, ""}
+		err := a.Login()
+		if err != nil {
+			return nil, err
+		}
+		return &a, nil
+	}
+	return nil, errors.New("empty parameter")
+}
+
+func (a *Api) Login() error {
+	data, err := a.Request("idoit.login", nil)
+	if err != nil {
+		return err
+	}
+	res, err := TypeAssertResult(data)
+	if err != nil {
+		return err
+	}
+
+	if len(res.Result) != 0 {
+		a.SessionId = res.Result[0]["session-id"].(string)
+	} else {
+		return errors.New(res.Error.Data.(map[string]interface{})["error"].(string))
+	}
+	return nil
+}
+
+func (a Api) IsLoggedIn() bool {
+	if len(a.SessionId) != 0 {
+		return true
+	}
+	return false
+}
+
+func (a Api) Logout() error {
+	_, err := a.Request("idoit.logout", nil)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (a Api) Request(method string, parameters interface{}) (Response, error) {
@@ -194,6 +245,17 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 		}
 	}
 	client := &http.Client{Transport: tr}
+
+	// use X-RPC auth or fallback to API-Key only
+	if method == "idoit.login" {
+		req.Header["X-RPC-Auth-Username"] = []string{a.Username}
+		req.Header["X-RPC-Auth-Password"] = []string{a.Password}
+	} else {
+		if a.IsLoggedIn() {
+			req.Header["X-RPC-Auth-Session"] = []string{a.SessionId}
+		}
+	}
+
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("REQUEST ERROR: ", err)
