@@ -63,6 +63,11 @@ type ApiMethods interface {
 	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
 	GetCategory(int, interface{}) (GenericResponse, error)
 
+	// get Object Type Categories using category id or constant
+	// eg. GetObjTypeCat("C__OBJTYPE__PERSON")
+	// or GetObjTypeCat(50)
+	GetObjTypeCat(interface{}) (GenericResponse, error)
+
 	// get report data via id
 	GetReport(int) (GenericResponse, error)
 
@@ -265,13 +270,33 @@ func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error)
 	}
 
 	data, err := a.Request("cmdb.category.read", CustomStruct)
-
-	ret, err := TypeAssertResult(data)
 	if err != nil {
 		return GenericResponse{}, err
 	}
 
-	return ret, nil
+	return TypeAssertResult(data)
+}
+
+func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
+
+	var CustomStruct interface{}
+	switch query.(type) {
+	case int:
+		CustomStruct = struct {
+			Type int `json:"type"`
+		}{query.(int)}
+	case string:
+		CustomStruct = struct {
+			Type string `json:"type"`
+		}{query.(string)}
+	}
+
+	data, err := a.Request("cmdb.object_type_categories.read", CustomStruct)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+
+	return TypeAssertResult(data)
 }
 
 func (a *Api) GetReport(RepID int) (GenericResponse, error) {
@@ -281,13 +306,11 @@ func (a *Api) GetReport(RepID int) (GenericResponse, error) {
 	}{RepID}
 
 	data, err := a.Request("cmdb.reports.read", CustomStruct)
-
-	ret, err := TypeAssertResult(data)
 	if err != nil {
 		return GenericResponse{}, err
 	}
 
-	return ret, nil
+	return TypeAssertResult(data)
 }
 
 // Quickpurge ftw

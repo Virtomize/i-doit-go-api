@@ -7,7 +7,7 @@ import (
 
 /* this time we will do some more advanced requests using the Request Method
 we have seen in some examples before
-first we will create a simple read method for object_type_categories since our api client only implements this for standard i-doit objects
+first we will create a simple read method for object_type_categories similar to the library implementation
 */
 func GetObjTypeCat(a *goidoit.Api, objType string) (goidoit.GenericResponse, error) {
 
