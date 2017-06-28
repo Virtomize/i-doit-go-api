@@ -69,6 +69,9 @@ type ApiMethods interface {
 	// input can be of type int, []int, string or a custom filter struct
 	GetObject(interface{}) (GenericResponse, error)
 
+	// shortcut function for Type Filter using C__OBJTYPE const
+	GetObjectByType(string, interface{}) (GenericResponse, error)
+
 	// get categorys for object using object id and category id or category constant
 	// eg. GetCategory(20,50)
 	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
@@ -306,6 +309,41 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 		}{F2{query.(string)}}
 	default:
 		Params = query
+	}
+
+	data, err := a.Request("cmdb.objects.read", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+// object type filter
+type OF1 struct {
+	Title []int  `json:"ids"`
+	Type  string `json:"type"`
+}
+
+type OF2 struct {
+	Title string `json:"title"`
+	Type  string `json:"type"`
+}
+
+func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse, error) {
+	var Params interface{}
+	switch obj.(type) {
+	case int:
+		Params = struct {
+			Filter OF1 `json:"filter"`
+		}{OF1{[]int{obj.(int)}, objType}}
+	case []int:
+		Params = struct {
+			Filter OF1 `json:"filter"`
+		}{OF1{obj.([]int), objType}}
+	case string:
+		Params = struct {
+			Filter OF2 `json:"filter"`
+		}{OF2{obj.(string), objType}}
 	}
 
 	data, err := a.Request("cmdb.objects.read", &Params)
