@@ -72,6 +72,9 @@ type ApiMethods interface {
 	// shortcut function for Type Filter using C__OBJTYPE const
 	GetObjectByType(string, interface{}) (GenericResponse, error)
 
+	// shortcut function for get all objects of type <C__OBJTYPE__>
+	GetObjectsByType(string) (GenericResponse, error)
+
 	// get categorys for object using object id and category id or category constant
 	// eg. GetCategory(20,50)
 	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
@@ -345,6 +348,24 @@ func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse,
 			Filter OF2 `json:"filter"`
 		}{OF2{obj.(string), objType}}
 	}
+
+	data, err := a.Request("cmdb.objects.read", &Params)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+// object type only filter
+type OSF1 struct {
+	Type string `json:"type"`
+}
+
+func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
+	var Params interface{}
+	Params = struct {
+		Filter OSF1 `json:"filter"`
+	}{OSF1{objType}}
 
 	data, err := a.Request("cmdb.objects.read", &Params)
 	if err != nil {

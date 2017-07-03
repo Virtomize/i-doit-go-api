@@ -13,15 +13,15 @@ func main() {
 	// goidoit.Debug(true)
 
 	// select via string
-	viaString, _ := a.GetObjectByType("C__BOJTYPE__LAYER3_NET", "Global v4")
+	viaString, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", "Global v4")
 	fmt.Printf("%#v\n", viaString)
 
 	// select via objectid
-	viaInt, _ := a.GetObjectByType("C__BOJTYPE__LAYER3_NET", 20)
+	viaInt, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", 20)
 	fmt.Printf("%#v\n", viaInt)
 
 	// select via slice of objectid's
-	viaInt, _ := a.GetObjectByType("C__BOJTYPE__LAYER3_NET", []int{20, 21})
+	viaInt, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", []int{20, 21})
 	for i := range viaIntSlice.Result {
 		fmt.Printf("%#v\n", viaIntSlice)
 	}
