@@ -21,7 +21,20 @@ func main() {
 	}{"C__OBJTYPE__VIRTUAL_SERVER", "test-vm"}
 
 	// create it
-	a.Create(data)
+	res, _ := a.CreateObj(data)
+
+	// now lets create a Hostname Category for oure new Server
+	id := strconv.Atoi(res.Result[0]["id"].(string))
+
+	IPData := struct {
+		Hostname       string `json:"hostname"`
+		Ip             string `json:"ipv4_address"`
+		Ipv4Assingment int    `json:"ipv4_assignment"`
+		NetType        int    `json:"net_type"`
+		Domain         string `json:"domain"`
+	}{"test-vm", "192.168.0.22", 1, 1, "example.de"}
+
+	a.CreateCat(id, "C__CATG__IP", IPData)
 
 	// read data back using GetObject
 	fmt.Println("#### read #####")
@@ -48,7 +61,7 @@ func main() {
 		Type  string `json:"type"`
 		Title string `json:"title"`
 	}{"C__OBJTYPE__LAYER3_NET", "test-net"}
-	a.Create(dataNet)
+	a.CreateObj(dataNet)
 
 	// get our id
 	fmt.Println("#### read net #####")

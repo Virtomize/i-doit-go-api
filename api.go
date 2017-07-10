@@ -80,6 +80,9 @@ type ApiMethods interface {
 	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
 	GetCategory(int, interface{}) (GenericResponse, error)
 
+	// create category using struct
+	CreateCat(int, string, interface{}) (GenericResponse, error)
+
 	// get Object Type Categories using category id or constant
 	// eg. GetObjTypeCat("C__OBJTYPE__PERSON")
 	// or GetObjTypeCat(50)
@@ -93,7 +96,7 @@ type ApiMethods interface {
 	Quickpurge(interface{}) (GenericResponse, error)
 
 	// create objects using struct
-	Create(interface{}) (GenericResponse, error)
+	CreateObj(interface{}) (GenericResponse, error)
 
 	// update object
 	Update(interface{}) (GenericResponse, error)
@@ -398,6 +401,21 @@ func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error)
 	return TypeAssertResult(data)
 }
 
+func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
+
+	CustomStruct := struct {
+		ObjId  int         `json:"objID"`
+		CatgId string      `json:"catgID"`
+		Data   interface{} `json:"data"`
+	}{ObjId, CatgId, Params}
+
+	data, err := a.Request("cmdb.category.create", CustomStruct)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
 func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
@@ -459,7 +477,7 @@ func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
 }
 
 // Create Object
-func (a *Api) Create(Params interface{}) (GenericResponse, error) {
+func (a *Api) CreateObj(Params interface{}) (GenericResponse, error) {
 
 	data, err := a.Request("cmdb.object.create", &Params)
 	if err != nil {
