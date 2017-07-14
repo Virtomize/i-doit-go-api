@@ -1,5 +1,3 @@
-**__ This project is still under development __**
-
 # i-doit-go-api/goidoit 
 
 is an I-doit API client implementation written in [GOLANG](https://golang.org).
