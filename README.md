@@ -1,6 +1,6 @@
 # i-doit-go-api/goidoit 
 
-is an I-doit API client implementation written in [GOLANG](https://golang.org).
+is an [I-doit](https://www.i-doit.com/) API client implementation written in [GOLANG](https://golang.org).
 
 Its focused on simplicity to create easy writable code for your projects.
 
@@ -26,6 +26,9 @@ Other types of requests like
 
 are not implemented yet (and maybe never will) but can easily be implemented using the goidoit.Request function
 there are some [advanced](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced.go) [examples](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced2.go) of how to do this.
+
+There is also a second repo [i-doit-go-tools](https://github.com/cseeger-epages/i-doit-go-tools) where you can find some more scripts for special use-cases that can be used as an
+even more advanced example :P.
 
 ## Installation
 

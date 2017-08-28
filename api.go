@@ -37,9 +37,11 @@ import (
 )
 
 // request id
-var id int = 0
-var debug bool = false
-var insecure bool = false
+var (
+	id       int  = 0
+	debug    bool = false
+	insecure bool = false
+)
 
 // basic api interface
 type ApiMethods interface {
