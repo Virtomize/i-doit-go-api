@@ -36,6 +36,16 @@ func main() {
 
 	a.CreateCat(id, "C__CATG__IP", IPData)
 
+	IPData := struct {
+		Hostname       string `json:"hostname"`
+		Ip             string `json:"ipv4_address"`
+		Ipv4Assingment int    `json:"ipv4_assignment"`
+		NetType        int    `json:"net_type"`
+		Domain         string `json:"domain"`
+	}{"test-vm", "192.168.0.23", 1, 1, "example.de"}
+
+	a.UpdateCat(id, "C__CATG__IP", IPData)
+
 	// read data back using GetObject
 	fmt.Println("#### read #####")
 	obj, _ := a.GetObject("test-vm")

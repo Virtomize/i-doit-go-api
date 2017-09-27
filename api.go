@@ -67,6 +67,9 @@ type ApiMethods interface {
 	// for simple output usage
 	Search(string) (GenericResponse, error)
 
+	// version information
+	Version() (GenericResponse, error)
+
 	// get object(s) data,
 	// input can be of type int, []int, string or a custom filter struct
 	GetObject(interface{}) (GenericResponse, error)
@@ -288,6 +291,15 @@ func (a *Api) Search(query string) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+func (a *Api) Version() (GenericResponse, error) {
+	data, err := a.Request("idoit.version", nil)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+
+	return TypeAssertResult(data)
+}
+
 // Object filter type int or []int
 type F1 struct {
 	Data []int `json:"ids"`
@@ -412,6 +424,21 @@ func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 	}{ObjId, CatgId, Params}
 
 	data, err := a.Request("cmdb.category.create", CustomStruct)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
+
+func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
+
+	CustomStruct := struct {
+		ObjId  int         `json:"objID"`
+		CatgId string      `json:"catgID"`
+		Data   interface{} `json:"data"`
+	}{ObjId, CatgId, Params}
+
+	data, err := a.Request("cmdb.category.update", CustomStruct)
 	if err != nil {
 		return GenericResponse{}, err
 	}
