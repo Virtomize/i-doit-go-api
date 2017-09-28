@@ -11,9 +11,10 @@ func dummy(a *goidoit.Api) (goidoit.GenericResponse, error) {
 }
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+	// Debug and SSL Skip
+	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
 
-	// enable debug
-	goidoit.Debug(true)
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 }

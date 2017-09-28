@@ -8,9 +8,11 @@ import (
 func main() {
 	// enable Debug
 	goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+
 	// check if our login was successfull
 	if err != nil {
 		log.Fatal(err)

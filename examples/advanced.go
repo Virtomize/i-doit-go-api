@@ -27,11 +27,12 @@ func GetObjTypeCat(a *goidoit.Api, objType string) (goidoit.GenericResponse, err
 }
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+	// Debug and SSL Skip
+	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
 
-	// enable debug
-	goidoit.Debug(true)
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
 	// now lets requests some object_type_categories like C__OBJTYPE__VIRTUAL_SERVER
 	servers, _ := GetObjTypeCat(a, "C__OBJTYPE__VIRTUAL_SERVER")

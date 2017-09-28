@@ -7,11 +7,12 @@ import (
 )
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+	// Debug and SSL Skip
+	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
 
-	// enable debug
-	goidoit.Debug(true)
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
 	// create a struct defining your object
 	fmt.Println("#### create #####")
@@ -24,7 +25,7 @@ func main() {
 	res, _ := a.CreateObj(data)
 
 	// now lets create a Hostname Category for oure new Server
-	id := strconv.Atoi(res.Result[0]["id"].(string))
+	id, _ := strconv.Atoi(res.Result[0]["id"].(string))
 
 	IPData := struct {
 		Hostname       string `json:"hostname"`
@@ -36,7 +37,7 @@ func main() {
 
 	a.CreateCat(id, "C__CATG__IP", IPData)
 
-	IPData := struct {
+	IPData = struct {
 		Hostname       string `json:"hostname"`
 		Ip             string `json:"ipv4_address"`
 		Ipv4Assingment int    `json:"ipv4_assignment"`
@@ -50,7 +51,7 @@ func main() {
 	fmt.Println("#### read #####")
 	obj, _ := a.GetObject("test-vm")
 	// we need it to be int
-	id, _ := strconv.Atoi(obj.Result[0]["id"].(string))
+	id, _ = strconv.Atoi(obj.Result[0]["id"].(string))
 
 	// update object
 	fmt.Println("#### update #####")
@@ -59,7 +60,7 @@ func main() {
 		Title string `json:"title"`
 	}{id, "test-neu"}
 
-	a.Update(updata)
+	a.UpdateObj(updata)
 
 	// hopefully theres only one object or we will delete maybe the wrong one :P
 	fmt.Println("#### purge #####")
@@ -84,5 +85,5 @@ func main() {
 		ID     int    `json:"id"`
 		Status string `json:"status"`
 	}{idnet, "C__RECORD_STATUS__ARCHIVED"}
-	a.Delete(archive)
+	a.DeleteObj(archive)
 }

@@ -7,11 +7,12 @@ import (
 
 func main() {
 
+	// Debug and SSL Skip
+	goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
+
 	// create api object using api url and your api key
 	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
-
-	// enable debug
-	goidoit.Debug(true)
 
 	// do a simple request  like getting the idoit version
 	json, _ := a.Request("idoit.version", nil)
