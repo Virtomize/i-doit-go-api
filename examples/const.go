@@ -6,11 +6,12 @@ import (
 )
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
-
-	// enable debug
+	// Debug and SSL Skip
 	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
+
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
 	// request constants
 	data, _ := a.Request("idoit.constants", nil)

@@ -6,11 +6,13 @@ import (
 )
 
 func main() {
+
+	// Debug and SSL skip
+	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
+
 	// create api object
 	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
-
-	// enable debug
-	// goidoit.Debug(true)
 
 	// search for sht like test
 	s, _ := a.Search("test")

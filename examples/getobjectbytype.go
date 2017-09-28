@@ -6,11 +6,12 @@ import (
 )
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("http://example.com/src/jsonrpc.php", "yourapikey")
+	// Debug and SSL Skip
+	//goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
 
-	// enable debug
-	// goidoit.Debug(true)
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
 	// select via string
 	viaString, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", "Global v4")
@@ -21,8 +22,8 @@ func main() {
 	fmt.Printf("%#v\n", viaInt)
 
 	// select via slice of objectid's
-	viaInt, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", []int{20, 21})
-	for i := range viaIntSlice.Result {
-		fmt.Printf("%#v\n", viaIntSlice)
+	viaIntSlice, _ := a.GetObjectByType("C__OBJTYPE__LAYER3_NET", []int{20, 21})
+	for _, v := range viaIntSlice.Result {
+		fmt.Printf("%#v\n", v)
 	}
 }

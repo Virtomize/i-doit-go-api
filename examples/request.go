@@ -6,11 +6,13 @@ import (
 )
 
 func main() {
-	// create api object
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
-	// enable Debug
+	// Debug and SSL Skip
 	goidoit.Debug(true)
+	//goidoit.SkipTLSVerify(true)
+
+	// create api object using api url and your api key
+	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
 
 	// create your parameters as a struct, that gets marshalled to json
 	p := struct {
