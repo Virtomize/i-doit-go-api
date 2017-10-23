@@ -23,4 +23,23 @@ func main() {
 
 	// logout when your done
 	a.Logout()
+
+	// another way is to reuse the session key
+	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+
+	// check if our login was successfull
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// here is the session key
+	sessionKey := a.SessionId
+
+	// you can reuse this key without needing the user password anymore as long as the sessionKey is valid
+	b := goidoit.Api{"https://example.com/src/jsonrpc.php", "yourapikey", "username", "", sessionKey}
+
+	b.Search("test")
+
+	// destroys the session
+	a.Logout()
 }
