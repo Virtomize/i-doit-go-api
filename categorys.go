@@ -26,6 +26,7 @@ package goidoit
 
 import (
 	"strconv"
+	"strings"
 )
 
 func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error) {
@@ -54,11 +55,21 @@ func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error)
 
 func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
 
-	CustomStruct := struct {
-		ObjId  int         `json:"objID"`
-		CatgId string      `json:"catgID"`
-		Data   interface{} `json:"data"`
-	}{ObjId, CatgId, Params}
+	var CustomStruct interface{}
+
+	if strings.Contains(CatgId, "_CUSTOM_") {
+		CustomStruct = struct {
+			ObjId  int         `json:"objID"`
+			CatgId string      `json:"category"`
+			Data   interface{} `json:"data"`
+		}{ObjId, CatgId, Params}
+	} else {
+		CustomStruct = struct {
+			ObjId  int         `json:"objID"`
+			CatgId string      `json:"catgID"`
+			Data   interface{} `json:"data"`
+		}{ObjId, CatgId, Params}
+	}
 
 	data, err := a.Request("cmdb.category.create", CustomStruct)
 	if err != nil {
@@ -69,11 +80,21 @@ func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 
 func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
 
-	CustomStruct := struct {
-		ObjId  int         `json:"objID"`
-		CatgId string      `json:"catgID"`
-		Data   interface{} `json:"data"`
-	}{ObjId, CatgId, Params}
+	var CustomStruct interface{}
+
+	if strings.Contains(CatgId, "_CUSTOM_") {
+		CustomStruct = struct {
+			ObjId  int         `json:"objID"`
+			CatgId string      `json:"category"`
+			Data   interface{} `json:"data"`
+		}{ObjId, CatgId, Params}
+	} else {
+		CustomStruct = struct {
+			ObjId  int         `json:"objID"`
+			CatgId string      `json:"catgID"`
+			Data   interface{} `json:"data"`
+		}{ObjId, CatgId, Params}
+	}
 
 	data, err := a.Request("cmdb.category.update", CustomStruct)
 	if err != nil {
