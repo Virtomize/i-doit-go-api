@@ -101,6 +101,9 @@ type ApiMethods interface {
 	// update category using struct
 	UpdateCat(int, string, interface{}) (GenericResponse, error)
 
+	// delete entry from category
+	DelCatObj(int, string, string) (GenericResponse, error)
+
 	// get report data via id
 	GetReport(int) (GenericResponse, error)
 }

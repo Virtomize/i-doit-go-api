@@ -102,3 +102,28 @@ func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 	}
 	return TypeAssertResult(data)
 }
+
+func (a *Api) DelCatObj(ObjId int, CatgId string, CateId string) (GenericResponse, error) {
+
+	var CustomStruct interface{}
+
+	if strings.Contains(CatgId, "_CUSTOM_") {
+		CustomStruct = struct {
+			ObjId  int    `json:"objID"`
+			CatgId string `json:"category"`
+			CateId string `json:"id"`
+		}{ObjId, CatgId, CateId}
+	} else {
+		CustomStruct = struct {
+			ObjId  int    `json:"objID"`
+			CatgId string `json:"catgID"`
+			CateId string `json:"id"`
+		}{ObjId, CatgId, CateId}
+	}
+
+	data, err := a.Request("cmdb.category.delete", CustomStruct)
+	if err != nil {
+		return GenericResponse{}, err
+	}
+	return TypeAssertResult(data)
+}
