@@ -29,7 +29,7 @@ import (
 	"strings"
 )
 
-func (a *Api) GetCategory(objID int, query interface{}) (GenericResponse, error) {
+func (a *Api) GetCat(objID int, query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 	switch query.(type) {

@@ -91,12 +91,15 @@ type ApiMethods interface {
 	Quickpurge(interface{}) (GenericResponse, error)
 
 	// get categorys for object using object id and category id or category constant
-	// eg. GetCategory(20,50)
-	// or GetCategory(20,"C__CATG__CUSTOM_FIELD_TEST")
-	GetCategory(int, interface{}) (GenericResponse, error)
+	// eg. GetCat(20,50)
+	// or GetCat(20,"C__CATG__CUSTOM_FIELD_TEST")
+	GetCat(int, interface{}) (GenericResponse, error)
 
 	// create category using struct
 	CreateCat(int, string, interface{}) (GenericResponse, error)
+
+	// update category using struct
+	UpdateCat(int, string, interface{}) (GenericResponse, error)
 
 	// get report data via id
 	GetReport(int) (GenericResponse, error)
