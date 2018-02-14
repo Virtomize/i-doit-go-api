@@ -26,6 +26,7 @@ package goidoit
 
 import (
 	"errors"
+	"strings"
 )
 
 // Get Object by everything
@@ -82,9 +83,15 @@ func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse,
 
 func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
 	var Params interface{}
-	Params = struct {
-		Filter OSF1 `json:"filter"`
-	}{OSF1{objType}}
+	if strings.Contains(objType, "C__CATG") {
+		Params = struct {
+			Type string `json:"type_title"`
+		}{objType}
+	} else {
+		Params = struct {
+			Filter OSF1 `json:"filter"`
+		}{OSF1{objType}}
+	}
 
 	data, err := a.Request("cmdb.objects.read", &Params)
 	if err != nil {
