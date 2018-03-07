@@ -32,16 +32,17 @@ import (
 	"net/http"
 )
 
+// Debug function to enable debug output
 func Debug(v bool) {
 	debug = v
 }
 
-// disable SSL/TLS verification for self signed certificates
+// SkipTLSVerify disable SSL/TLS verification for self signed certificates
 func SkipTLSVerify(v bool) {
 	insecure = v
 }
 
-// generic Type Assert function
+// TypeAssertResult is a generic type assert function
 func TypeAssertResult(data Response) (GenericResponse, error) {
 	ret := GenericResponse{Jsonrpc: data.Jsonrpc, Error: data.Error}
 
@@ -65,13 +66,13 @@ func TypeAssertResult(data Response) (GenericResponse, error) {
 	return ret, nil
 }
 
-// increment request id's
+// getID increments request id's
 func getID() int {
 	id++
 	return id
 }
 
-// append nessesary parameters to user provided one
+// GetParams is used to append nessesary parameters to user provided one
 func GetParams(a Api, parameters interface{}) interface{} {
 
 	var params map[string]interface{}
@@ -95,7 +96,7 @@ func GetParams(a Api, parameters interface{}) interface{} {
 	return params
 }
 
-// parse json response
+// ParseResponse parses json response
 func ParseResponse(resp *http.Response) Response {
 	data, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -111,11 +112,10 @@ func ParseResponse(resp *http.Response) Response {
 	return ret
 }
 
-// used for Request/Response debugging
+// debugPrint used for request/response debugging
 func debugPrint(format string, a ...interface{}) (n int, err error) {
 	if debug {
 		return fmt.Printf(format, a)
-	} else {
-		return 0, nil
 	}
+	return 0, nil
 }

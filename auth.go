@@ -28,7 +28,7 @@ import (
 	"errors"
 )
 
-// api constructor
+// NewApi implements Api constructor
 func NewApi(url string, apikey string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 {
 		a := Api{url, apikey, "", "", ""}
@@ -37,7 +37,7 @@ func NewApi(url string, apikey string) (*Api, error) {
 	return nil, errors.New("url or apikey empty")
 }
 
-// api constructor using login x-rpc auth
+// NewLogin implements Api constructor using login x-rpc auth
 func NewLogin(url string, apikey string, username string, password string) (*Api, error) {
 	if len(url) != 0 && len(apikey) != 0 && len(username) != 0 && len(password) != 0 {
 		a := Api{url, apikey, username, password, ""}
@@ -50,6 +50,7 @@ func NewLogin(url string, apikey string, username string, password string) (*Api
 	return nil, errors.New("empty parameter")
 }
 
+// Login implements idoit.login method
 func (a *Api) Login() error {
 	data, err := a.Request("idoit.login", nil)
 	if err != nil {
@@ -68,6 +69,7 @@ func (a *Api) Login() error {
 	return nil
 }
 
+// IsLoggedIn checks the login status
 func (a Api) IsLoggedIn() bool {
 	if len(a.SessionId) != 0 {
 		return true
@@ -75,6 +77,7 @@ func (a Api) IsLoggedIn() bool {
 	return false
 }
 
+// Logout implements idoit.logout method
 func (a Api) Logout() error {
 	_, err := a.Request("idoit.logout", nil)
 	if err != nil {

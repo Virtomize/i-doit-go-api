@@ -24,7 +24,7 @@
 
 package goidoit
 
-// basic api interface
+// ApiMethods is the interface describing all importand functions
 type ApiMethods interface {
 	// idoit.login using X-RPC-AUTH
 	// goidoit.NewLogin wraps this function

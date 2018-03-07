@@ -32,6 +32,7 @@ import (
 	"net/http"
 )
 
+// Request implements basic idoit requests
 func (a Api) Request(method string, parameters interface{}) (Response, error) {
 
 	var params = GetParams(a, parameters)
@@ -86,6 +87,7 @@ func (a Api) Request(method string, parameters interface{}) (Response, error) {
 	return ret, nil
 }
 
+// Search implements the idoit.search method
 func (a *Api) Search(query string) (GenericResponse, error) {
 	params := struct {
 		Query string `json:"q"`
@@ -98,6 +100,7 @@ func (a *Api) Search(query string) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// Version implements idoit.version method
 func (a *Api) Version() (GenericResponse, error) {
 	data, err := a.Request("idoit.version", nil)
 	if err != nil {

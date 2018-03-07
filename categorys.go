@@ -29,6 +29,7 @@ import (
 	"strings"
 )
 
+// GetCat returns the category defined by query for an object given by its object ID
 func (a *Api) GetCat(objID int, query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
@@ -53,6 +54,7 @@ func (a *Api) GetCat(objID int, query interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// CreateCat creates a category given by its category ID and the defined content in params for a given object ID
 func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
@@ -78,6 +80,7 @@ func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 	return TypeAssertResult(data)
 }
 
+// UpdateCat updates a category given by its category ID and the defined content in params for a given object ID
 func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
@@ -103,6 +106,7 @@ func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 	return TypeAssertResult(data)
 }
 
+// DelCatObj deletes a given category for a given object
 func (a *Api) DelCatObj(ObjId int, CatgId string, CateId string) (GenericResponse, error) {
 
 	var CustomStruct interface{}

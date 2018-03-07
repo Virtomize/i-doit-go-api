@@ -29,7 +29,7 @@ import (
 	"strings"
 )
 
-// Get Object by everything
+// GetObject function returns an object matching the given query
 func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 
 	var Params interface{}
@@ -57,6 +57,7 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// GetObjectByType function return an object of a specific type
 func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse, error) {
 	var Params interface{}
 	switch obj.(type) {
@@ -81,6 +82,7 @@ func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse,
 	return TypeAssertResult(data)
 }
 
+// GetObjectsByType returns multiple objects of the given type
 func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
 	var Params interface{}
 	if strings.Contains(objType, "C__CATG") {
@@ -100,6 +102,7 @@ func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
+// GetObjTypeCat returns the objecttype category
 func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
@@ -122,7 +125,7 @@ func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
-// Create Object
+// CreateObj creates an object
 func (a *Api) CreateObj(Params interface{}) (GenericResponse, error) {
 
 	data, err := a.Request("cmdb.object.create", &Params)
@@ -132,7 +135,7 @@ func (a *Api) CreateObj(Params interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
-// Update Object
+// UpdateObj updates an object
 func (a *Api) UpdateObj(Params interface{}) (GenericResponse, error) {
 
 	data, err := a.Request("cmdb.object.update", &Params)
@@ -142,7 +145,7 @@ func (a *Api) UpdateObj(Params interface{}) (GenericResponse, error) {
 	return TypeAssertResult(data)
 }
 
-// Delete/Archive/Purge Object
+// DeleteObj delete/archive/purge an object
 func (a *Api) DeleteObj(deleteMe interface{}) (GenericResponse, error) {
 
 	var Params interface{}

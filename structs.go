@@ -26,17 +26,17 @@ package goidoit
 
 // globals
 var (
-	id       int  = 0
+	id       int
 	debug    bool = false
 	insecure bool = false
 )
 
-// api struct used for implementing the apiMethods interface
+// Api struct used for implementing the apiMethods interface
 type Api struct {
 	Url, Apikey, Username, Password, SessionId string
 }
 
-// i-doit api request structure
+// Request implements i-doit api request structure
 type Request struct {
 	Version string      `json:"version"`
 	Method  string      `json:"method"`
@@ -44,15 +44,14 @@ type Request struct {
 	Id      int         `json:"id"`
 }
 
-// i-doit api response structure
+// Response implements i-doit api response structure
 type Response struct {
 	Jsonrpc string      `json:"jsonrpc"`
 	Result  interface{} `json:"result"`
 	Error   IdoitError  `json:"error"`
 }
 
-// i-doit api response structure used for search requests
-//
+// GenericResponse implements a generic i-doit api response structure
 // the map is used to handle type assertions
 type GenericResponse struct {
 	Jsonrpc string
@@ -60,7 +59,7 @@ type GenericResponse struct {
 	Error   IdoitError
 }
 
-// i-doit api error structure
+// IdoitError implements i-doit api error structure
 type IdoitError struct {
 	Code    int         `json:"code"`
 	Message string      `json:"message"`
@@ -72,28 +71,31 @@ type Apikey struct {
 	Apikey string `json:"apikey"`
 }
 
-// Object filter type int or []int
+// F1 implements an object filter type int or []int
 type F1 struct {
 	Data []int `json:"ids"`
 }
 
-// Object filter type string
+// F2 implements an Object filter type string
 type F2 struct {
 	Data string `json:"title"`
 }
 
-// object type filter
+// OF1 implements a more complex object type filter
+// for ids and type
 type OF1 struct {
 	Title []int  `json:"ids"`
 	Type  string `json:"type"`
 }
 
+// OF2 implements a more complex object type filter
+// for title and type
 type OF2 struct {
 	Title string `json:"title"`
 	Type  string `json:"type"`
 }
 
-// object type only filter
+// OSF1 implements object type only filter
 type OSF1 struct {
 	Type string `json:"type"`
 }

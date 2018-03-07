@@ -24,6 +24,7 @@
 
 package goidoit
 
+// GetReport returns the report given by its id
 func (a *Api) GetReport(RepID int) (GenericResponse, error) {
 
 	CustomStruct := struct {
