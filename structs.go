@@ -26,9 +26,8 @@ package goidoit
 
 // globals
 var (
-	id       int
-	debug    bool = false
-	insecure bool = false
+	id              int
+	debug, insecure bool = false, false
 )
 
 // Api struct used for implementing the apiMethods interface
