@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/cseeger-epages/i-doit-go-api"
 )
@@ -14,9 +15,15 @@ func main() {
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// search for sht like test
-	s, _ := a.Search("test")
+	s, err := a.Search("test")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	/* show output
 	the SearchResponse type is nearly the same like Response type

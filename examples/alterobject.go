@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
 	"github.com/cseeger-epages/i-doit-go-api"
@@ -14,6 +15,9 @@ func main() {
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// create a struct defining your object
 	fmt.Println("#### create #####")
@@ -23,10 +27,16 @@ func main() {
 	}{"C__OBJTYPE__VIRTUAL_SERVER", "test-vm"}
 
 	// create it
-	res, _ := a.CreateObj(data)
+	res, err := a.CreateObj(data)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// now lets create a Hostname Category for oure new Server
-	id, _ := strconv.Atoi(res.Result[0]["id"].(string))
+	id, err := strconv.Atoi(res.Result[0]["id"].(string))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	IPData := struct {
 		Hostname       string `json:"hostname"`
@@ -52,7 +62,10 @@ func main() {
 	fmt.Println("#### read #####")
 	obj, _ := a.GetObject("test-vm")
 	// we need it to be int
-	id, _ = strconv.Atoi(obj.Result[0]["id"].(string))
+	id, err = strconv.Atoi(obj.Result[0]["id"].(string))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// update object
 	fmt.Println("#### update #####")
@@ -77,8 +90,14 @@ func main() {
 
 	// get our id
 	fmt.Println("#### read net #####")
-	net, _ := a.GetObject("test-net")
-	idnet, _ := strconv.Atoi(net.Result[0]["id"].(string))
+	net, err := a.GetObject("test-net")
+	if err != nil {
+		log.Fatal(err)
+	}
+	idnet, err := strconv.Atoi(net.Result[0]["id"].(string))
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// and now lets archive it
 	fmt.Println("#### archive net #####")

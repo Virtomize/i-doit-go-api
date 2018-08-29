@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/cseeger-epages/i-doit-go-api"
 )
@@ -13,8 +14,14 @@ func main() {
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	data, _ := a.GetReport(1)
+	data, err := a.GetReport(1)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for _, v := range data.Result {
 		fmt.Println(v)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/cseeger-epages/i-doit-go-api"
 )
@@ -20,12 +21,15 @@ func GetObjTypeCat(a *goidoit.API, objType string) (goidoit.GenericResponse, err
 	}{objType}
 
 	// then we do our request
-	data, _ := a.Request("cmdb.object_type_categories.read", &p)
+	data, err := a.Request("cmdb.object_type_categories.read", &p)
+	if err != nil {
+		return goidoit.GenericResponse{}, err
+	}
 
 	// our Request gives us only an interface back so we need to type assert it
 	// thankfully our api client package provides a generic TypeAssertResult function that takes care
 	// of all forms of type assertions
-	return goidoit.TypeAssertResult(data)
+	return goidoit.TypeAssertResult(data), nil
 
 }
 
@@ -36,9 +40,15 @@ func main() {
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// now lets requests some object_type_categories like C__OBJTYPE__VIRTUAL_SERVER
-	servers, _ := GetObjTypeCat(a, "C__OBJTYPE__VIRTUAL_SERVER")
+	servers, err := GetObjTypeCat(a, "C__OBJTYPE__VIRTUAL_SERVER")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// and we got a list back
 	fmt.Println(servers)

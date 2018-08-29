@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/cseeger-epages/i-doit-go-api"
 )
@@ -13,17 +14,32 @@ func main() {
 
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// select via string
-	viaString, _ := a.GetObject("Root location")
+	viaString, err := a.GetObject("Root location")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Printf("%#v\n", viaString.Result[0]["title"])
 
 	// select via objectid
-	viaInt, _ := a.GetObject(4)
+	viaInt, err := a.GetObject(4)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	fmt.Printf("%#v\n", viaInt.Result[0]["title"])
 
 	// select via slice of objectid's
-	viaIntSlice, _ := a.GetObject([]int{1, 4, 5})
+	viaIntSlice, err := a.GetObject([]int{1, 4, 5})
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	for i := range viaIntSlice.Result {
 		fmt.Printf("%#v\n", viaIntSlice.Result[i]["title"])
 	}
@@ -41,7 +57,10 @@ func main() {
 	}{S{"Max"}, 1} // <-- struct initialisation using our parameter struct
 
 	// get your filtered objects
-	viaStruct, _ := a.GetObject(CustomStruct)
+	viaStruct, err := a.GetObject(CustomStruct)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	for i := range viaStruct.Result {
 		fmt.Printf("%#v\n", viaStruct.Result[i]["title"])
