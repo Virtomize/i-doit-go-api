@@ -6,7 +6,7 @@ import (
 )
 
 // GetCat returns the category defined by query for an object given by its object ID
-func (a *Api) GetCat(objID int, query interface{}) (GenericResponse, error) {
+func (a *API) GetCat(objID int, query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 	switch query.(type) {
@@ -31,22 +31,22 @@ func (a *Api) GetCat(objID int, query interface{}) (GenericResponse, error) {
 }
 
 // CreateCat creates a category given by its category ID and the defined content in params for a given object ID
-func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
+func (a *API) CreateCat(ObjID int, CatgID string, Params interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 
-	if strings.Contains(CatgId, "_CUSTOM_") {
+	if strings.Contains(CatgID, "_CUSTOM_") {
 		CustomStruct = struct {
-			ObjId  int         `json:"objID"`
-			CatgId string      `json:"category"`
+			ObjID  int         `json:"objID"`
+			CatgID string      `json:"category"`
 			Data   interface{} `json:"data"`
-		}{ObjId, CatgId, Params}
+		}{ObjID, CatgID, Params}
 	} else {
 		CustomStruct = struct {
-			ObjId  int         `json:"objID"`
-			CatgId string      `json:"catgID"`
+			ObjID  int         `json:"objID"`
+			CatgID string      `json:"catgID"`
 			Data   interface{} `json:"data"`
-		}{ObjId, CatgId, Params}
+		}{ObjID, CatgID, Params}
 	}
 
 	data, err := a.Request("cmdb.category.create", CustomStruct)
@@ -57,22 +57,22 @@ func (a *Api) CreateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 }
 
 // UpdateCat updates a category given by its category ID and the defined content in params for a given object ID
-func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericResponse, error) {
+func (a *API) UpdateCat(ObjID int, CatgID string, Params interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 
-	if strings.Contains(CatgId, "_CUSTOM_") {
+	if strings.Contains(CatgID, "_CUSTOM_") {
 		CustomStruct = struct {
-			ObjId  int         `json:"objID"`
-			CatgId string      `json:"category"`
+			ObjID  int         `json:"objID"`
+			CatgID string      `json:"category"`
 			Data   interface{} `json:"data"`
-		}{ObjId, CatgId, Params}
+		}{ObjID, CatgID, Params}
 	} else {
 		CustomStruct = struct {
-			ObjId  int         `json:"objID"`
-			CatgId string      `json:"catgID"`
+			ObjID  int         `json:"objID"`
+			CatgID string      `json:"catgID"`
 			Data   interface{} `json:"data"`
-		}{ObjId, CatgId, Params}
+		}{ObjID, CatgID, Params}
 	}
 
 	data, err := a.Request("cmdb.category.update", CustomStruct)
@@ -83,22 +83,22 @@ func (a *Api) UpdateCat(ObjId int, CatgId string, Params interface{}) (GenericRe
 }
 
 // DelCatObj deletes a given category for a given object
-func (a *Api) DelCatObj(ObjId int, CatgId string, CateId string) (GenericResponse, error) {
+func (a *API) DelCatObj(ObjID int, CatgID string, CateID string) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 
-	if strings.Contains(CatgId, "_CUSTOM_") {
+	if strings.Contains(CatgID, "_CUSTOM_") {
 		CustomStruct = struct {
-			ObjId  int    `json:"objID"`
-			CatgId string `json:"category"`
-			CateId string `json:"id"`
-		}{ObjId, CatgId, CateId}
+			ObjID  int    `json:"objID"`
+			CatgID string `json:"category"`
+			CateID string `json:"id"`
+		}{ObjID, CatgID, CateID}
 	} else {
 		CustomStruct = struct {
-			ObjId  int    `json:"objID"`
-			CatgId string `json:"catgID"`
-			CateId string `json:"id"`
-		}{ObjId, CatgId, CateId}
+			ObjID  int    `json:"objID"`
+			CatgID string `json:"catgID"`
+			CateID string `json:"id"`
+		}{ObjID, CatgID, CateID}
 	}
 
 	data, err := a.Request("cmdb.category.delete", CustomStruct)

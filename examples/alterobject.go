@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/cseeger-epages/i-doit-go-api"
 	"strconv"
+
+	"github.com/cseeger-epages/i-doit-go-api"
 )
 
 func main() {
@@ -11,8 +12,8 @@ func main() {
 	//goidoit.Debug(true)
 	//goidoit.SkipTLSVerify(true)
 
-	// create api object using api url and your api key
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+	// create api object using NewLogin for X-RPC-Auth
+	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
 	// create a struct defining your object
 	fmt.Println("#### create #####")
@@ -29,7 +30,7 @@ func main() {
 
 	IPData := struct {
 		Hostname       string `json:"hostname"`
-		Ip             string `json:"ipv4_address"`
+		IP             string `json:"ipv4_address"`
 		Ipv4Assingment int    `json:"ipv4_assignment"`
 		NetType        int    `json:"net_type"`
 		Domain         string `json:"domain"`
@@ -39,7 +40,7 @@ func main() {
 
 	IPData = struct {
 		Hostname       string `json:"hostname"`
-		Ip             string `json:"ipv4_address"`
+		IP             string `json:"ipv4_address"`
 		Ipv4Assingment int    `json:"ipv4_assignment"`
 		NetType        int    `json:"net_type"`
 		Domain         string `json:"domain"`

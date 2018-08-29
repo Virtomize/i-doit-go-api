@@ -6,9 +6,9 @@ var (
 	debug, insecure bool = false, false
 )
 
-// Api struct used for implementing the apiMethods interface
-type Api struct {
-	Url, Apikey, Username, Password, SessionId string
+// API struct used for implementing the apiMethods interface
+type API struct {
+	URL, APIkey, Username, Password, SessionID string
 }
 
 // Request implements i-doit api request structure
@@ -16,7 +16,7 @@ type Request struct {
 	Version string      `json:"version"`
 	Method  string      `json:"method"`
 	Params  interface{} `json:"params"`
-	Id      int         `json:"id"`
+	ID      int         `json:"id"`
 }
 
 // Response implements i-doit api response structure
@@ -41,9 +41,9 @@ type IdoitError struct {
 	Data    interface{} `json:"data"`
 }
 
-// Apikey used for requests
-type Apikey struct {
-	Apikey string `json:"apikey"`
+// APIkey used for requests
+type APIkey struct {
+	APIkey string `json:"apikey"`
 }
 
 // F1 implements an object filter type int or []int

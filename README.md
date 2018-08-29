@@ -1,5 +1,11 @@
 # i-doit-go-api/goidoit 
 
+[![GoDoc](https://img.shields.io/badge/godoc-reference-green.svg)](https://godoc.org/github.com/cseeger-epages/i-doit-go-api)
+[![Go Report Card](https://goreportcard.com/badge/github.com/cseeger-epages/i-doit-go-api)](https://goreportcard.com/report/github.com/cseeger-epages/i-doit-go-api)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cseeger-epages/i-doit-go-api/blob/master/LICENSE)
+[//] [![Build Status](https://travis-ci.org/cseeger-epages/i-doit-go-api.svg?branch=master)](https://travis-ci.org/cseeger-epages/i-doit-go-api)
+
+
 is an [I-doit](https://www.i-doit.com/) API client implementation written in [GOLANG](https://golang.org).
 
 Its focused on simplicity to create easy writable code for your projects.
@@ -15,9 +21,9 @@ the package supports:
 - object\_type\_categories
 
 Other types of requests like
-- object\_types (comming soon)
-- object\_type\_groups (comming soon)
-- objects\_by\_relation (comming soon)
+- object\_types (coming soon)
+- object\_type\_groups (coming soon)
+- objects\_by\_relation (coming soon)
 - categories (category, category\_info) (wip)
 - location\_tree
 - workstation\_components
@@ -54,9 +60,9 @@ import (
 
 func main() {
   // create api object
-  a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+  a, _ := goidoit.NewAPI("https://example.com/src/jsonrpc.php", "yourapikey")
 
-  // or login using X-RPC-Auth
+  // or login using X-RPC-Auth (recommended)
   // a, _ := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
   // search for sth like test

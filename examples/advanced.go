@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/cseeger-epages/i-doit-go-api"
 )
 
@@ -9,7 +10,9 @@ import (
 we have seen in some examples before
 first we will create a simple read method for object_type_categories similar to the library implementation
 */
-func GetObjTypeCat(a *goidoit.Api, objType string) (goidoit.GenericResponse, error) {
+
+// GetObjTypeCat for getting object type categories
+func GetObjTypeCat(a *goidoit.API, objType string) (goidoit.GenericResponse, error) {
 
 	// lets create our request parameters, in our case we simple query by type
 	p := struct {
@@ -31,8 +34,8 @@ func main() {
 	//goidoit.Debug(true)
 	//goidoit.SkipTLSVerify(true)
 
-	// create api object using api url and your api key
-	a, _ := goidoit.NewApi("https://example.com/src/jsonrpc.php", "yourapikey")
+	// create api object using NewLogin for X-RPC-Auth
+	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
 	// now lets requests some object_type_categories like C__OBJTYPE__VIRTUAL_SERVER
 	servers, _ := GetObjTypeCat(a, "C__OBJTYPE__VIRTUAL_SERVER")

@@ -1,7 +1,7 @@
 package goidoit
 
 // GetReport returns the report given by its id
-func (a *Api) GetReport(RepID int) (GenericResponse, error) {
+func (a *API) GetReport(RepID int) (GenericResponse, error) {
 
 	CustomStruct := struct {
 		ID int `json:"id"`

@@ -49,10 +49,10 @@ func getID() int {
 }
 
 // GetParams is used to append nessesary parameters to user provided one
-func GetParams(a Api, parameters interface{}) interface{} {
+func GetParams(a API, parameters interface{}) interface{} {
 
 	var params map[string]interface{}
-	apikey := Apikey{a.Apikey}
+	apikey := APIkey{a.APIkey}
 
 	jsonParameters, err := json.Marshal(parameters)
 
@@ -61,13 +61,13 @@ func GetParams(a Api, parameters interface{}) interface{} {
 	}
 
 	json.Unmarshal(jsonParameters, &params)
-	jsonApikey, err := json.Marshal(apikey)
+	jsonAPIkey, err := json.Marshal(apikey)
 
 	if err != nil {
 		log.Fatal("JSON ERROR: ", err)
 	}
 
-	json.Unmarshal(jsonApikey, &params)
+	json.Unmarshal(jsonAPIkey, &params)
 
 	return params
 }

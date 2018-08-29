@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/cseeger-epages/i-doit-go-api"
 	"log"
+
+	"github.com/cseeger-epages/i-doit-go-api"
 )
 
 func main() {
@@ -13,7 +14,7 @@ func main() {
 	// create api object using NewLogin for X-RPC-Auth
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
-	// check if our login was successfull
+	// check if our login was successful
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,7 +28,7 @@ func main() {
 	// another way is to reuse the session key
 	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
-	// check if our login was successfull
+	// check if our login was successful
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,7 +37,7 @@ func main() {
 	sessionKey := a.SessionId
 
 	// you can reuse this key without needing the user password anymore as long as the sessionKey is valid
-	b := goidoit.Api{"https://example.com/src/jsonrpc.php", "yourapikey", "username", "", sessionKey}
+	b := goidoit.API{"https://example.com/src/jsonrpc.php", "yourapikey", "username", "", sessionKey}
 
 	b.Search("test")
 

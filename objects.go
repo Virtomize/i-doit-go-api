@@ -6,7 +6,7 @@ import (
 )
 
 // GetObject function returns an object matching the given query
-func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
+func (a *API) GetObject(query interface{}) (GenericResponse, error) {
 
 	var Params interface{}
 	switch query.(type) {
@@ -34,7 +34,7 @@ func (a *Api) GetObject(query interface{}) (GenericResponse, error) {
 }
 
 // GetObjectByType function return an object of a specific type
-func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse, error) {
+func (a *API) GetObjectByType(objType string, obj interface{}) (GenericResponse, error) {
 	var Params interface{}
 	switch obj.(type) {
 	case int:
@@ -59,7 +59,7 @@ func (a *Api) GetObjectByType(objType string, obj interface{}) (GenericResponse,
 }
 
 // GetObjectsByType returns multiple objects of the given type
-func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
+func (a *API) GetObjectsByType(objType string) (GenericResponse, error) {
 	var Params interface{}
 	if strings.Contains(objType, "C__CATG") {
 		Params = struct {
@@ -79,7 +79,7 @@ func (a *Api) GetObjectsByType(objType string) (GenericResponse, error) {
 }
 
 // GetObjTypeCat returns the objecttype category
-func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
+func (a *API) GetObjTypeCat(query interface{}) (GenericResponse, error) {
 
 	var CustomStruct interface{}
 	switch query.(type) {
@@ -102,7 +102,7 @@ func (a *Api) GetObjTypeCat(query interface{}) (GenericResponse, error) {
 }
 
 // CreateObj creates an object
-func (a *Api) CreateObj(Params interface{}) (GenericResponse, error) {
+func (a *API) CreateObj(Params interface{}) (GenericResponse, error) {
 
 	data, err := a.Request("cmdb.object.create", &Params)
 	if err != nil {
@@ -112,7 +112,7 @@ func (a *Api) CreateObj(Params interface{}) (GenericResponse, error) {
 }
 
 // UpdateObj updates an object
-func (a *Api) UpdateObj(Params interface{}) (GenericResponse, error) {
+func (a *API) UpdateObj(Params interface{}) (GenericResponse, error) {
 
 	data, err := a.Request("cmdb.object.update", &Params)
 	if err != nil {
@@ -122,13 +122,13 @@ func (a *Api) UpdateObj(Params interface{}) (GenericResponse, error) {
 }
 
 // DeleteObj delete/archive/purge an object
-func (a *Api) DeleteObj(deleteMe interface{}) (GenericResponse, error) {
+func (a *API) DeleteObj(deleteMe interface{}) (GenericResponse, error) {
 
 	var Params interface{}
 	switch deleteMe.(type) {
 	case int:
 		Params = struct {
-			Id int `json:"id"`
+			ID int `json:"id"`
 		}{deleteMe.(int)}
 	default:
 		Params = deleteMe
@@ -142,13 +142,13 @@ func (a *Api) DeleteObj(deleteMe interface{}) (GenericResponse, error) {
 }
 
 // Quickpurge ftw
-func (a *Api) Quickpurge(ids interface{}) (GenericResponse, error) {
+func (a *API) Quickpurge(ids interface{}) (GenericResponse, error) {
 
 	var Params interface{}
 	switch ids.(type) {
 	case int:
 		Params = struct {
-			Id int `json:"id"`
+			ID int `json:"id"`
 		}{ids.(int)}
 	case []int:
 		Params = struct {
