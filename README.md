@@ -3,8 +3,6 @@
 [![GoDoc](https://img.shields.io/badge/godoc-reference-green.svg)](https://godoc.org/github.com/cseeger-epages/i-doit-go-api)
 [![Go Report Card](https://goreportcard.com/badge/github.com/cseeger-epages/i-doit-go-api)](https://goreportcard.com/report/github.com/cseeger-epages/i-doit-go-api)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cseeger-epages/i-doit-go-api/blob/master/LICENSE)
-[//] [![Build Status](https://travis-ci.org/cseeger-epages/i-doit-go-api.svg?branch=master)](https://travis-ci.org/cseeger-epages/i-doit-go-api)
-
 
 is an [I-doit](https://www.i-doit.com/) API client implementation written in [GOLANG](https://golang.org).
 
