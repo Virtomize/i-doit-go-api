@@ -40,7 +40,7 @@ func (a *API) Login() error {
 	if len(res.Result) != 0 {
 		a.SessionID = res.Result[0]["session-id"].(string)
 	} else {
-		return errors.New(res.Error.Data.(map[string]interface{})["error"].(string))
+		return errors.New(res.Error.Message)
 	}
 	return nil
 }
