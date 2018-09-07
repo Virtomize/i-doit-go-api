@@ -15,5 +15,5 @@ func main() {
 	//goidoit.SkipTLSVerify(true)
 
 	// create api object using NewLogin for X-RPC-Auth
-	_, _ := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	_, _ = goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 }

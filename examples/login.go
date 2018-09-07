@@ -26,7 +26,7 @@ func main() {
 	a.Logout()
 
 	// another way is to reuse the session key
-	a, err := goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
+	a, err = goidoit.NewLogin("https://example.com/src/jsonrpc.php", "yourapikey", "username", "password")
 
 	// check if our login was successful
 	if err != nil {
