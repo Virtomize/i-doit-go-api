@@ -12,7 +12,7 @@ func TResetID() {
 
 // export debug func
 func TdebugPrint(format string, a ...interface{}) (n int, err error) {
-	return debugPrint(format, a)
+	return debugPrint(format, a...)
 }
 
 func TgetDebug() bool {
