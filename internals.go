@@ -91,7 +91,7 @@ func ParseResponse(resp *http.Response) Response {
 // debugPrint used for request/response debugging
 func debugPrint(format string, a ...interface{}) (n int, err error) {
 	if debug {
-		return fmt.Printf(format, a)
+		return fmt.Printf(format, a...)
 	}
 	return 0, nil
 }
