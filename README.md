@@ -18,6 +18,7 @@ the package supports:
 - reports
 - categories (only parts implemented) (wip)
 - object\_type\_categories
+- dialog
 
 Other types of requests like
 - object\_types (coming soon)
