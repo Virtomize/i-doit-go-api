@@ -2,16 +2,13 @@ package goidoit
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type inttest struct {
 	n        int
 	expected int
-}
-
-type constructortest struct {
-	input    []string
-	expected bool
 }
 
 func TestGetID(t *testing.T) {
@@ -32,9 +29,6 @@ func TestGetID(t *testing.T) {
 	}
 }
 
-func TestDebugPrint(t *testing.T) {
-}
-
 func TestDebug(t *testing.T) {
 	Debug(false)
 	if TgetDebug() {
@@ -44,4 +38,14 @@ func TestDebug(t *testing.T) {
 	if !TgetDebug() {
 		t.Errorf("Expected true got false\n")
 	}
+	// just not to have debug for the following tests
+	Debug(false)
+}
+
+func TestTLSVerify(t *testing.T) {
+	assert.False(t, insecure)
+	SkipTLSVerify(true)
+	assert.True(t, insecure)
+	SkipTLSVerify(false)
+	assert.False(t, insecure)
 }

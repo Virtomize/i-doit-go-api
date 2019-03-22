@@ -1,6 +1,7 @@
 package goidoit
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -20,6 +21,8 @@ func (a *API) GetCat(objID int, query interface{}) (GenericResponse, error) {
 			ObjID    string `json:"objID"`
 			Category string `json:"category"`
 		}{strconv.Itoa(objID), query.(string)}
+	default:
+		return GenericResponse{}, fmt.Errorf("query should be of type int or string")
 	}
 
 	data, err := a.Request("cmdb.category.read", CustomStruct)
