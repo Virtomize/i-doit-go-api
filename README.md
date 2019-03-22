@@ -105,6 +105,8 @@ mage coverage
 - [godoc](https://godoc.org/)
 - [golang playground](https://play.golang.org/)
 
+This project uses [sematic versioning](https://semver.org/).
+
 ## Other great client implementations
 
 - Benjamin Heisigs [i-doit-api-client-php](https://github.com/bheisig/i-doit-api-client-php/)
