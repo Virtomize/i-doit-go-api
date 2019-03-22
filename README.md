@@ -92,6 +92,12 @@ After installing mage just run:
 mage test
 ```
 
+also code coverage in detail can be seen via browser by using
+
+```
+mage coverage
+```
+
 ## Additional Informations
 
 - [i-doit API documentation](https://kb.i-doit.com/pages/viewpage.action?pageId=37355644)
