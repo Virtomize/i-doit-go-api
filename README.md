@@ -113,3 +113,9 @@ This project uses [sematic versioning](https://semver.org/).
 - Dennis Stückens [i-doit-api-clients](https://bitbucket.org/dstuecken/i-doit-api-clients/)
 
 Thanks for your code inspirations!
+
+## Contribution
+
+Thank you for participating to this project.
+Please see our [Contribution Guidlines](https://github.com/cseeger-epages/i-doit-go-api/blob/master/CONTRIBUTING.md) for more information.
+
