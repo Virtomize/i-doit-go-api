@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"strconv"
 
 	"github.com/cseeger-epages/i-doit-go-api"
 )
@@ -33,10 +32,7 @@ func main() {
 	}
 
 	// now lets create a Hostname Category for oure new Server
-	id, err := strconv.Atoi(res.Result[0]["id"].(string))
-	if err != nil {
-		log.Fatal(err)
-	}
+	id := int(res.Result[0]["id"].(float64))
 
 	IPData := struct {
 		Hostname       string `json:"hostname"`
@@ -62,10 +58,7 @@ func main() {
 	fmt.Println("#### read #####")
 	obj, _ := a.GetObject("test-vm")
 	// we need it to be int
-	id, err = strconv.Atoi(obj.Result[0]["id"].(string))
-	if err != nil {
-		log.Fatal(err)
-	}
+	id = int(obj.Result[0]["id"].(float64))
 
 	// update object
 	fmt.Println("#### update #####")
@@ -94,10 +87,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	idnet, err := strconv.Atoi(net.Result[0]["id"].(string))
-	if err != nil {
-		log.Fatal(err)
-	}
+	idnet := int(net.Result[0]["id"].(float64))
 
 	// and now lets archive it
 	fmt.Println("#### archive net #####")
