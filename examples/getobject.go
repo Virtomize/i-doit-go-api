@@ -54,7 +54,41 @@ func main() {
 	CustomStruct := struct {
 		Filter S   `json:"filter"`
 		L      int `json:"limit"`
-	}{S{"Max"}, 1} // <-- struct initialisation using our parameter struct
+	}{S{"Max"}, 1}
+
+	// get your filtered objects
+	viaStruct, err := a.GetObject(CustomStruct)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i := range viaStruct.Result {
+		fmt.Printf("%#v\n", viaStruct.Result[i]["title"])
+	}
+
+	// you can optional request categorys using the following CustomStruct
+	CustomStruct := struct {
+		Filter     S    `json:"filter"`
+		L          int  `json:"limit"`
+		Categories bool `json:"categories"`
+	}{S{"Max"}, 1, true}
+
+	// get your filtered objects
+	viaStruct, err := a.GetObject(CustomStruct)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for i := range viaStruct.Result {
+		fmt.Printf("%#v\n", viaStruct.Result[i]["title"])
+	}
+
+	// or specify what Categories you want to see
+	CustomStruct := struct {
+		Filter     S        `json:"filter"`
+		L          int      `json:"limit"`
+		Categories []string `json:"categories"`
+	}{S{"Max"}, 1, []string{"C__CATG__...", "C__CATG__..."}}
 
 	// get your filtered objects
 	viaStruct, err := a.GetObject(CustomStruct)
