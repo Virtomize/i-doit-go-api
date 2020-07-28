@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/cseeger-epages/i-doit-go-api"
+	"github.com/virtomize/i-doit-go-api"
 )
 
 /* dummy file for advanced example 2 */

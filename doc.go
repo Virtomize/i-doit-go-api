@@ -4,7 +4,7 @@ Package goidoit is an https://www.i-doit.com/ API client implementation written 
 
 Install using go get
 
-	go get github.com/cseeger-epages/i-doit-go-api
+	go get github.com/virtomize/i-doit-go-api
 
 Initialize your API object
 

@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/cseeger-epages/i-doit-go-api"
+	"github.com/virtomize/i-doit-go-api"
 )
 
 func main() {

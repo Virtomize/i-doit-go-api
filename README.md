@@ -1,9 +1,10 @@
 # i-doit-go-api/goidoit 
 
-[![GoDoc](https://img.shields.io/badge/godoc-reference-green.svg)](https://godoc.org/github.com/cseeger-epages/i-doit-go-api)
-[![Go Report Card](https://goreportcard.com/badge/github.com/cseeger-epages/i-doit-go-api)](https://goreportcard.com/report/github.com/cseeger-epages/i-doit-go-api)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/cseeger-epages/i-doit-go-api/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/cseeger-epages/i-doit-go-api.svg?branch=master)](https://travis-ci.org/cseeger-epages/i-doit-go-api)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VBXHBYFU44T5W&source=url)
+[![GoDoc](https://img.shields.io/badge/godoc-reference-green.svg)](https://godoc.org/github.com/virtomize/i-doit-go-api)
+[![Go Report Card](https://goreportcard.com/badge/github.com/virtomize/i-doit-go-api)](https://goreportcard.com/report/github.com/virtomize/i-doit-go-api)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/virtomize/i-doit-go-api/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/virtomize/i-doit-go-api.svg?branch=master)](https://travis-ci.org/virtomize/i-doit-go-api)
 [![Built with Mage](https://magefile.org/badge.svg)](https://magefile.org)
 ![Coverage](https://img.shields.io/badge/coverage-%3E80%25-brightgreen.svg)
 
@@ -33,9 +34,9 @@ Other types of requests like
 - impact
 
 are not implemented yet (and maybe never will) but can easily be implemented using the goidoit.Request function
-there are some [advanced](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced.go) [examples](https://github.com/cseeger-epages/i-doit-go-api/blob/master/examples/advanced2.go) of how to do this.
+there are some [advanced](https://github.com/virtomize/i-doit-go-api/blob/master/examples/advanced.go) [examples](https://github.com/virtomize/i-doit-go-api/blob/master/examples/advanced2.go) of how to do this.
 
-There is also a second repo [i-doit-go-tools](https://github.com/cseeger-epages/i-doit-go-tools) where you can find some more scripts for special use-cases that can be used as an
+There is also a second repo [i-doit-go-tools](https://github.com/virtomize/i-doit-go-tools) where you can find some more scripts for special use-cases that can be used as an
 even more advanced example :P.
 
 ## Installation
@@ -43,7 +44,7 @@ even more advanced example :P.
 If you already installed GO on your system and configured it properly than its simply:
 
 ```
-go get github.com/cseeger-epages/i-doit-go-api
+go get github.com/virtomize/i-doit-go-api
 ```
 
 If not follow [these instructions](https://nats.io/documentation/tutorials/go-install/).
@@ -57,7 +58,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/cseeger-epages/i-doit-go-api"
+	"github.com/virtomize/i-doit-go-api"
 )
 
 func main() {
@@ -77,11 +78,11 @@ func main() {
 
 ### Advanced examples
 
-There are more advanced [examples](https://github.com/cseeger-epages/i-doit-go-api/tree/master/examples) documented in the repo for common use cases.
+There are more advanced [examples](https://github.com/virtomize/i-doit-go-api/tree/master/examples) documented in the repo for common use cases.
 
 ## Code Documentation
 
-You find the full [code documentation here](https://godoc.org/github.com/cseeger-epages/i-doit-go-api)
+You find the full [code documentation here](https://godoc.org/github.com/virtomize/i-doit-go-api)
 
 ## Code Testing
 
@@ -117,5 +118,5 @@ Thanks for your code inspirations!
 ## Contribution
 
 Thank you for participating to this project.
-Please see our [Contribution Guidlines](https://github.com/cseeger-epages/i-doit-go-api/blob/master/CONTRIBUTING.md) for more information.
+Please see our [Contribution Guidlines](https://github.com/virtomize/i-doit-go-api/blob/master/CONTRIBUTING.md) for more information.
 

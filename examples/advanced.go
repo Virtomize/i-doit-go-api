@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cseeger-epages/i-doit-go-api"
+	"github.com/virtomize/i-doit-go-api"
 )
 
 /* this time we will do some more advanced requests using the Request Method
