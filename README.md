@@ -4,7 +4,7 @@
 [![GoDoc](https://img.shields.io/badge/godoc-reference-green.svg)](https://godoc.org/github.com/virtomize/i-doit-go-api)
 [![Go Report Card](https://goreportcard.com/badge/github.com/virtomize/i-doit-go-api)](https://goreportcard.com/report/github.com/virtomize/i-doit-go-api)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/virtomize/i-doit-go-api/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/virtomize/i-doit-go-api.svg?branch=master)](https://travis-ci.org/virtomize/i-doit-go-api)
+[![Build Status](https://travis-ci.com/virtomize/i-doit-go-api.svg?branch=master)](https://travis-ci.com/virtomize/i-doit-go-api)
 [![Built with Mage](https://magefile.org/badge.svg)](https://magefile.org)
 ![Coverage](https://img.shields.io/badge/coverage-%3E80%25-brightgreen.svg)
 
